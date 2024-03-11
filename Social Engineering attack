@@ -1,0 +1,22 @@
+1)Credential harvester web attack method 
+The SET’s credential harvesting attack uses a cloned site to collect credentials. To launch this attack, 
+select 2) Website Attack Vectors from the main menu, then 3) Credential Harvester Attack Method, 
+and then select 2) Site Cloner. 
+For this example, we will follow the menu selections to clone a website, such as Facebook
+
+==>setoolkit
+Enter the url to clone:https://facebook.com
+
+Again, the attacker’s IP address must be sent to the intended target. When the target clicks on the 
+link or enters the IP address, they will be presented with a cloned page that resembles the regular 
+login page for Facebook, and they will be prompted to enter their username and password:
+
+Once this is done, the users will be redirected to the regular Facebook site, where they will be 
+logged in to their account. In the background, their access credentials will be collected and 
+forwarded to the attacker. The attacker will see the following entry, 
+
+2)HTA web attack method 
+An attacker can create a malicious application for Windows using web technologies. To launch an HTA attack 
+using social engineering toolkit, select 1) Social-Engineering Attacks from the main menu. Then, select 2) 
+Website Attack Vectors from the next menu, and select 7) HTA Attack Method, followed by 2) Site Cloner, to 
+clone any website. In this case, we will clone facebook.com,
