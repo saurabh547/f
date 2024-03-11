@@ -1,0 +1,60 @@
+1.OSINT-(OPEN SOURCE INTELLIGENCE) 
+The first step in a penetration test or an attack is information collection using OSINT. This is the art 
+of collecting information from public sources, particularly through the internet. The amount of 
+available information is considerable—most intelligence and military organizations are actively 
+engaged in OSINT activities to collect information about their targets, and to guard against data 
+leakage about them. 
+OSINT can be divided into two types: offensive and defensive.  
+Offensive deals with harvesting all the data that is required to prepare an attack on the target.  
+Defensive is the art of collecting the data of previous breaches and any other security incidents 
+relevant to the target that can be utilized to defend or protect themselves 
+2.Gather domain information 
+We will utilize the sublist3r tool to perform domain harvesting. This tool is not preinstalled in Kali 
+Linux; however, it can be installed by running: 
+sudo apt install sublist3r  
+This tool is written in Python, which will enumerate the sub-domains of a primary domain using the 
+OSINT techniques. 
+It utilizes APIs such as the Google, Bing, Baidu, and ASK search engines. Additionally, it also performs 
+searches in NetCraft, VirusTotal, Threatcrowd, DNSDumpster, and ReverseDNS, while also 
+performing DNS brute force using a specific wordlist. 
+Once the tool is installed, attackers can run the following command to search for sub-domains in 
+the Bing search engine. 
+
+==> sudo sublist3r -d ourtargetcompany.com -t 3 -e bing  
+
+3. OSRFramework  
+OSRFramework is a tool designed by i3visio to perform opensource threat intelligence as a 
+web interface with consoles such as OSRFConsole. To install this framework, install pip3 by 
+running: 
+
+==> sudo apt install python3-pip 
+
+Finally, the OSRFramework tool can be installed directly through pip3 by running command 
+in the same terminal: 
+==> sudo pip3 install osrframework
+==> pip install osrframwork --user
+==> sudo usufy.py -n aliabhatt
+
+mailfy: This identifies a keyword and adds the email domains to the end of the keyword, 
+while automatically searching in haveibeenpawned.com with an API call:
+==> sudo mailfy -n cyberhia
+==> sudo searchfy -q "cyberhia"
+
+
+4.Web Archives 
+When something is deleted from the internet, it is not necessarily completely deleted from 
+everywhere. Every page that is visited by Google is backed up as a snapshot in Google’s cache 
+servers.The following link is the second level used after the google cache when harvesting past data 
+https://web.archive.org/web/. 
+Following Figure is a screenshot of cyberhia.com in the WayBack Machine, as of 24 March 2018: 
+Cached page for cyberhia.com as of March 2018 Google Cache, Wayback Machine, and the live 
+version of any given domain can be accessed directly by visiting https://cachedviews.com/. 
+5. Scraping  
+a)Gathering usernames and email addresses  
+A technique that attackers utilize to extract a large number of datasets from websites, whereby the 
+extracted data is stored locally in a filesystem, is called scraping, or web scraping. In the following 
+section, we will utilize some of the most commonly used tools in Kali Linux to perform scraping. 
+theHarvester is a Python script that searches through popular search engines and other sites for 
+email addresses, hosts, and subdomains.
+
+==> sudo theHarvester -d facebook.com -l 100 -b google
