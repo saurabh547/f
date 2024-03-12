@@ -1,0 +1,201 @@
+Introduction 
+VTP Pruning is the key element of VTP (VLAN Turning Protocol). It help improves network performance 
+and network bandwidth by decreasing unnecessary flooded traffic i.e. broadcast, multicast, unknown 
+and flooded unicast packets. In normal operation, a switch needs to flood broadcast frames, multicast 
+frames, or unicast frames where the destination MAC address is unknown to all its ports. If the 
+neighboring switch doesn’t have any active ports in the source VLAN, this broadcast is needless and 
+excessive undesirable traffic may create problems on the network. 
+This is disabled by default in Cisco switches. VTP pruning Cisco helps to send broadcasts only to those 
+trunk links that actually needs the information i.e. with VTP pruning enabled, when the destination MAC 
+address is unknown, frames are forwarded over a trunk link only if the switch on the receiving end of the 
+trunk link has ports in the source VLAN pruning. It should only be enabled on VTP servers, all the clients 
+in the VTP domain will automatically enable VTP pruning. VLAN 1 can’t be pruned because it’s an 
+administrative VLAN. 
+It can be pruned manually using no vlan  command  or automatically by enabling pruning using  
+vtp pruning command.
+
+Step 1: Topology
+[  ]fa0/1 --- fa0/1[ ]fa0/2 ----fa0/1[ ]fa0/2----fa0/1[ ]fa0/2 ----fa0/1[ ] 
+
+Step 2:Basic and VLAN Configurations  
+Switch 1 
+Switch>en 
+Switch#conf t 
+
+Enter configuration commands, one per line. End with CNTL/Z. 
+Switch(config)#hostname SW1 
+SW1(config)#int f0/1 
+SW1(config-if)#switchport mode trunk 
+SW1(config-if)# 
+
+SW1(config-if)#exit 
+SW1(config)#vtp domain CISCO 
+Changing VTP domain name from NULL to CISCO 
+SW1(config)#vtp mode server 
+Device mode already VTP SERVER. 
+SW1(config)#vtp password cisco 
+Setting device VLAN database password to cisco 
+SW1(config)#
+
+SW1>en 
+SW1#conf t 
+Enter configuration commands, one per line. End with CNTL/Z. 
+SW1(config)#vlan 10 
+SW1(config-vlan)#name DATA 
+SW1(config-vlan)#exit 
+SW1(config)#vlan 20 
+SW1(config-vlan)#name VOICE 
+SW1(config-vlan)#exit 
+SW1(config)#exit 
+SW1# 
+%SYS-5-CONFIG_I: Configured from console by console 
+SW1#show vlan brief
+
+SW1#show vtp status 
+SW1#show interface trunk 
+
+SW1>en 
+SW1#show vtp status 
+
+SW1#show vlan brief 
+
+**Switch 2 
+
+Switch>en 
+Switch#conf t 
+Enter configuration commands, one per line. End with CNTL/Z. 
+Switch(config)#int f0/ 
+Switch(config)#int f0/1 
+Switch(config-if)#switchport mode trunk 
+Switch(config-if)#exit 
+Switch(config)#int f0/2 
+Switch(config-if)#exit 
+Switch(config)#vtp domain CISCO 
+
+Switch(config)#vtp mode server 
+Switch(config)#vtp password cisco 
+
+Switch>en 
+Switch#conf t 
+Enter configuration commands, one per line. End with CNTL/Z. 
+Switch(config)#vlan 30 
+Switch(config-vlan)#name WIRELESS 
+Switch(config-vlan)#exit 
+Switch(config)#exit 
+Switch#show vlan brief 
+
+Switch#show vtp status
+
+**Switch 3 
+Switch>en 
+Switch#conf t 
+Enter configuration commands, one per line. End with CNTL/Z. 
+Switch(config)#int f0/1 
+Switch(config-if)#switchport mode trunk 
+Switch(config-if)#exit 
+Switch(config)#int f0/2 
+Switch(config-if)#switchport mode trunk
+Switch(config-if)#switchport mode trunk 
+
+Switch(config-if)#exit 
+Switch(config)#vtp domain CISCO 
+Domain name already set to CISCO. 
+Switch(config)#vtp mode transparent 
+Setting device to VTP TRANSPARENT mode. 
+Switch(config)#vtp password cisco 
+Setting device VLAN database password to cisco 
+Switch(config)# 
+
+Switch>en 
+Switch#conf t 
+Enter configuration commands, one per line. End with CNTL/Z. 
+Switch(config)#vlan 10 
+Switch(config-vlan)#name DATA 
+Switch(config-vlan)#exit 
+Switch(config)#vlan 20 
+Switch(config-vlan)#name VOICE 
+Switch(config-vlan)#exit 
+Switch(config)#vlan 30 
+Switch(config-vlan)#name WIRELESS 
+Switch(config-vlan)#exit 
+Switch(config)#vlan 40 
+Switch(config-vlan)#name TEST 
+Switch(config-vlan)#exit 
+Switch(config)#exit 
+
+Switch#show vlan brief
+Switch#show vtp status 
+
+Switch#show interface trunk
+
+**Switch 4 
+Switch>en 
+Switch#conf t 
+Enter configuration commands, one per line. End with CNTL/Z. 
+Switch(config)#int f0/1 
+Switch(config-if)#switchport mode trunk 
+Switch(config-if)#exit 
+Switch(config)#int f0/2 
+Switch(config-if)#switchport mode trunk
+
+Switch(config-if)#exit 
+Switch(config)#vtp domain CISCO 
+Domain name already set to CISCO. 
+Switch(config)#vtp mode client 
+
+
+Switch(config)#vtp password cisco 
+Setting device VLAN database password to cisco 
+Switch(config)#exit 
+Switch# 
+%SYS-5-CONFIG_I: Configured from console by console 
+Switch#en 
+Switch#show vlan brief 
+Switch#show vtp status 
+Switch#show interface trunk 
+
+***Switch 5 
+Switch>en 
+Switch#conf t 
+Enter configuration commands, one per line. End with CNTL/Z. 
+Switch(config)#hostname Switch5 
+Switch5(config)#int f0/1 
+Switch5(config-if)#switchport mode trunk 
+Switch5(config-if)#exit 
+Switch5(config)#vtp domain CISCO 
+Changing VTP domain name from NULL to CISCO 
+Switch5(config)#vtp mode server 
+Device mode already VTP SERVER. 
+Switch5(config)#vtp password cisco 
+Setting device VLAN database password to cisco 
+Switch5(config)#
+
+Switch5#show vlan brief 
+Switch5#show vtp status 
+Switch5#show interface trunk 
+
+Step 3: VTP Pruning On Switch 3
+
+Switch#en 
+Switch#show interface trunk 
+
+Switch#show vlan brief 
+Switch#conf t 
+Switch(config)#exit 
+
+Switch#conf t
+Switch(config)#int range f0/1 -2 
+
+Switch(config-if-range)#vlan 10 
+Switch(config-vlan)#no vlan 10 
+Switch(config)#exit 
+Switch#show interface trunk 
+
+Switch#en 
+Switch#conf t 
+Enter configuration commands, one per line. End with CNTL/Z. 
+Switch(config)#int range f0/1 -2 
+Switch(config-if-range)#vlan 20 
+Switch(config-vlan)#no vlan 20 
+Switch(config)#exit 
+Switch#show interface trunk 
